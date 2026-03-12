@@ -5,15 +5,15 @@ function updateSavings() {
     const invilaPrice = parseFloat(document.getElementById('invila_price').value) || 0;
 
     // 2. Logika Perhitungan
-    // Asumsi: Kita mereklamasi 80% dari volume total (Yield Target)
+    // Asumsi: Reklamasi 80% dari volume total (Yield Target)
     const yieldRate = 0.8;
     const volReclaimed = volTotal * yieldRate;
 
     // Saving didapat dari selisih harga per m3 dikalikan volume yang berhasil direklamasi
     const savingPerCubic = pdamPrice - invilaPrice;
     const dailySaving = volReclaimed * savingPerCubic;
-    
-    // Menggunakan basis 31 hari per bulan
+
+    // Menggunakan basis 31 hari per bulan (sesuai target Rp 74.400.000 pada gambar pertama)
     const monthlySaving = dailySaving * 31;
     const annualSaving = monthlySaving * 12;
 
@@ -26,13 +26,20 @@ function updateSavings() {
     });
 
     // 4. Update UI
-    document.getElementById('monthly_saving').innerText = formatter.format(monthlySaving).replace("Rp", "Rp ");
-    document.getElementById('annual_saving').innerText = formatter.format(annualSaving).replace("Rp", "Rp ") + " / Tahun";
+    const monthlyElement = document.getElementById('monthly_saving');
+    const annualElement = document.getElementById('annual_saving');
+
+    if (monthlyElement) {
+        monthlyElement.innerText = formatter.format(monthlySaving).replace("Rp", "Rp ");
+    }
+    if (annualElement) {
+        annualElement.innerText = formatter.format(annualSaving).replace("Rp", "Rp ") + " / Tahun";
+    }
 }
 
 function kirimWhatsApp() {
-    const monthly = document.getElementById('monthly_saving').innerText;
-    const annual = document.getElementById('annual_saving').innerText;
+    const monthly = document.getElementById('monthly_saving')?.innerText || "0";
+    const annual = document.getElementById('annual_saving')?.innerText || "0";
     
     const message = `Halo Tim Invila, saya telah melakukan simulasi kalkulator.\n\n` +
                     `Estimasi penghematan biaya air PDAM kami adalah:\n` +
@@ -44,10 +51,10 @@ function kirimWhatsApp() {
     window.open(waUrl, '_blank');
 }
 
-// Listen ke semua input
+// Menjalankan fungsi saat input berubah
 document.querySelectorAll('input').forEach(input => {
     input.addEventListener('input', updateSavings);
 });
 
-// Run pertama kali
+// Jalankan saat halaman selesai dimuat
 document.addEventListener('DOMContentLoaded', updateSavings);
