@@ -1,69 +1,168 @@
-/**
- * RE-VALIDATED CODE: Invila™ Profit Generator
- * Version: 2.1 (Pure PDAM vs Invila)
- */
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invila™ Eco-Power | Profit Generator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; scroll-behavior: smooth; }
+        .hero-gradient { background: linear-gradient(135deg, #020617 0%, #0f172a 100%); }
+        .glass-card { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); }
+        input[type=number]::-webkit-inner-spin-button, 
+        input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900">
 
-function updateSavings() {
-    // Ambil elemen untuk menghindari pengulangan document.getElementById
-    const elVol = document.getElementById('vol_total');
-    const elPdam = document.getElementById('pdam_price');
-    const elInvila = document.getElementById('invila_price');
-    
-    // Validasi keberadaan elemen sebelum eksekusi
-    if (!elVol || !elPdam || !elInvila) return;
+    <!-- Navigation -->
+    <nav class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-200 py-4">
+        <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
+            <div class="text-2xl font-black tracking-tighter italic">INVILA<span class="text-emerald-500">™</span></div>
+            <div class="flex gap-8 font-semibold text-slate-600">
+                <a href="#simulasi" class="text-emerald-600 font-bold">Simulasi Saving</a>
+            </div>
+        </div>
+    </nav>
 
-    const volTotal = parseFloat(elVol.value) || 0;
-    const pdamPrice = parseFloat(elPdam.value) || 0;
-    const invilaPrice = parseFloat(elInvila.value) || 0;
+    <!-- Hero Section -->
+    <header class="hero-gradient text-white pt-20 pb-24 px-6">
+        <div class="max-w-5xl mx-auto text-center">
+            <span class="bg-emerald-500/20 text-emerald-400 px-4 py-2 rounded-full text-xs font-bold tracking-widest uppercase mb-6 inline-block">Profit Generator</span>
+            <h1 class="text-4xl md:text-6xl font-extrabold mb-8 leading-tight">Ubah Limbah Menjadi Aset Air — Tanpa CAPEX</h1>
+            <p class="text-lg md:text-xl text-slate-400 mb-10 max-w-3xl mx-auto">Transformasikan air limbah menjadi aset bernilai. Dorong efisiensi biaya operasional yang lebih cerdas dan berkelanjutan melalui sistem reklamasi air.</p>
+            <div class="flex flex-col md:flex-row justify-center gap-4">
+                <a href="#simulasi" class="bg-emerald-500 hover:bg-emerald-600 text-white px-8 py-4 rounded-xl font-bold transition shadow-xl shadow-emerald-500/20 text-lg">Mulai Simulasi Sekarang</a>
+            </div>
+        </div>
+    </header>
 
-    // LOGIKA: Substitusi 80% volume PDAM dengan Jasa Invila
-    const yieldRate = 0.8;
-    const volReclaimed = volTotal * yieldRate;
-    const savingPerCubic = pdamPrice - invilaPrice;
-    
-    const dailySaving = volReclaimed * savingPerCubic;
-    const monthlySaving = dailySaving * 31; // Basis 31 hari
-    const annualSaving = monthlySaving * 12;
+    <!-- Calculator Section -->
+    <section id="simulasi" class="py-16 px-6 -mt-16">
+        <div class="max-w-5xl mx-auto">
+            <div class="bg-white rounded-[2.5rem] shadow-2xl p-8 md:p-12 border border-slate-200">
+                <div class="text-center mb-10">
+                    <h2 class="text-3xl font-bold mb-2 text-slate-800">Hitung Potensi Profit Anda</h2>
+                    <p class="text-slate-500 italic text-sm">Masukkan harga beli air existing dan volume kebutuhan Anda.</p>
+                </div>
+                
+                <div class="grid md:grid-cols-2 gap-8 mb-10">
+                    <!-- Left Side: Inputs -->
+                    <div class="space-y-6">
+                        <div>
+                            <label class="block text-sm font-bold text-slate-700 mb-2">Volume Air Existing (m³/hari)</label>
+                            <input type="number" id="vol_total" value="2000" class="w-full bg-slate-50 border border-slate-200 p-4 rounded-xl outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 transition font-semibold text-lg">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-bold text-slate-700 mb-2">Harga PDAM (Rp/m³)</label>
+                            <div class="relative">
+                                <span class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-bold">Rp</span>
+                                <input type="number" id="pdam_price" value="14600" class="w-full bg-slate-50 border border-slate-200 p-4 pl-12 rounded-xl outline-none focus:border-emerald-500 transition font-semibold text-lg">
+                            </div>
+                        </div>
+                    </div>
 
-    // FORMATTER
-    const formatter = new Intl.NumberFormat('id-ID', {
-        style: 'currency',
-        currency: 'IDR',
-        minimumFractionDigits: 0
-    });
+                    <!-- Right Side: Invila & Target -->
+                    <div class="space-y-6">
+                        <div>
+                            <label class="block text-sm font-bold text-slate-700 mb-2">Harga Jasa Invila™ (Rp/m³)</label>
+                            <div class="relative">
+                                <span class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-bold">Rp</span>
+                                <input type="number" id="invila_price" value="5500" class="w-full bg-slate-50 border border-slate-200 p-4 pl-12 rounded-xl outline-none focus:border-emerald-500 transition font-semibold text-lg">
+                            </div>
+                        </div>
+                        <div class="p-6 bg-emerald-50 rounded-xl border border-emerald-100 flex items-center justify-center text-center">
+                            <div>
+                                <span class="block text-emerald-800 font-extrabold text-sm tracking-widest uppercase">Yield Reklamasi Target</span>
+                                <span class="text-3xl font-black text-emerald-600">80%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-    // UPDATE UI
-    const mSavingEl = document.getElementById('monthly_saving');
-    const aSavingEl = document.getElementById('annual_saving');
+                <!-- Result Display -->
+                <div class="bg-emerald-600 rounded-3xl p-10 text-white text-center shadow-2xl shadow-emerald-500/40 relative overflow-hidden group">
+                    <div class="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    <p class="uppercase tracking-widest text-[10px] font-bold opacity-80 mb-4">ESTIMASI PENGHEMATAN PER BULAN</p>
+                    <div id="monthly_saving" class="text-4xl md:text-7xl font-black mb-6 tracking-tight drop-shadow-md">Rp 0</div>
+                    <div id="annual_saving" class="text-lg md:text-xl font-bold bg-white/10 py-3 px-10 rounded-full inline-block backdrop-blur-md border border-white/20">
+                        Rp 0 / Tahun
+                    </div>
+                </div>
 
-    if (mSavingEl) mSavingEl.innerText = formatter.format(monthlySaving).replace("Rp", "Rp ");
-    if (aSavingEl) aSavingEl.innerText = formatter.format(annualSaving).replace("Rp", "Rp ") + " / Tahun";
-}
+                <div class="mt-8 text-center">
+                    <p class="text-slate-400 text-[10px] uppercase tracking-widest font-bold">Hasil simulasi bersifat estimasi berdasarkan input data Anda.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-function kirimWhatsApp() {
-    const monthly = document.getElementById('monthly_saving')?.innerText || "0";
-    const annual = document.getElementById('annual_saving')?.innerText || "0";
-    const vol = document.getElementById('vol_total')?.value || "0";
+    <!-- Footer -->
+    <footer class="py-12 bg-white border-t border-slate-200 px-6">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="text-slate-400 text-xs font-bold uppercase tracking-widest">&copy; 2026 PT Adikarya Konstruksi Perkasa | Invila™ Team</div>
+            <div class="flex gap-6 text-slate-400 font-bold text-xs uppercase tracking-widest">
+                <span>Sustainability First</span>
+                <span class="text-slate-200">|</span>
+                <span>Water Efficiency</span>
+            </div>
+        </div>
+    </footer>
 
-    const message = `Halo Tim Invila, saya telah mensimulasikan potensi profit.\n\n` +
-                    `Detail Pabrik:\n` +
-                    `- Volume: ${vol} m3/hari\n` +
-                    `- Hemat/Bulan: ${monthly}\n` +
-                    `- Hemat/Tahun: ${annual}\n\n` +
-                    `Mohon jadwalkan survey site untuk verifikasi data ini.`;
+    <script>
+        /** * FINAL VALIDATED CODE: Invila™ Profit Generator v2.6
+         * Logika: Murni PDAM vs Jasa Invila dengan Yield Target 80%
+         */
+        function updateSavings() {
+            const elVol = document.getElementById('vol_total');
+            const elPdam = document.getElementById('pdam_price');
+            const elInvila = document.getElementById('invila_price');
 
-    const waUrl = `https://wa.me/628123456789?text=${encodeURIComponent(message)}`;
-    window.open(waUrl, '_blank');
-}
+            if (!elVol || !elPdam || !elInvila) return;
 
-// VALIDASI EVENT LISTENER: Hanya pasang pada input yang relevan
-document.addEventListener('DOMContentLoaded', () => {
-    const calcInputs = ['vol_total', 'pdam_price', 'invila_price'];
-    calcInputs.forEach(id => {
-        const el = document.getElementById(id);
-        if (el) el.addEventListener('input', updateSavings);
-    });
-    
-    // Jalankan kalkulasi awal
-    updateSavings();
-});
+            const volTotal = parseFloat(elVol.value) || 0;
+            const pdamPrice = parseFloat(elPdam.value) || 0;
+            const invilaPrice = parseFloat(elInvila.value) || 0;
+
+            const yieldRate = 0.8;
+            const volReclaimed = volTotal * yieldRate;
+            
+            let savingPerCubic = pdamPrice - invilaPrice;
+            
+            if (savingPerCubic < 0) savingPerCubic = 0; 
+
+            const dailySaving = volReclaimed * savingPerCubic;
+            const monthlySaving = dailySaving * 31; 
+            const annualSaving = monthlySaving * 12;
+
+            const formatter = new Intl.NumberFormat('id-ID', {
+                style: 'currency',
+                currency: 'IDR',
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 0
+            });
+
+            const mSavingEl = document.getElementById('monthly_saving');
+            const aSavingEl = document.getElementById('annual_saving');
+
+            if (mSavingEl) {
+                mSavingEl.innerText = formatter.format(monthlySaving).replace("Rp", "Rp ");
+                mSavingEl.style.opacity = monthlySaving === 0 ? "0.5" : "1";
+            }
+            
+            if (aSavingEl) {
+                aSavingEl.innerText = formatter.format(annualSaving).replace("Rp", "Rp ") + " / Tahun";
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            ['vol_total', 'pdam_price', 'invila_price'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.addEventListener('input', updateSavings);
+            });
+            updateSavings();
+        });
+    </script>
+</body>
+</html>
