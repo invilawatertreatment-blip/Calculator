@@ -3,166 +3,295 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Invila™ Eco-Power | Profit Generator</title>
+    <title>Invila™ Intelligence Saving Audit</title>
+    
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
-    <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; scroll-behavior: smooth; }
-        .hero-gradient { background: linear-gradient(135deg, #020617 0%, #0f172a 100%); }
-        .glass-card { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); }
-        input[type=number]::-webkit-inner-spin-button, 
-        input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
-    </style>
-</head>
-<body class="bg-slate-50 text-slate-900">
-
-    <!-- Navigation -->
-    <nav class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-200 py-4">
-        <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
-            <div class="text-2xl font-black tracking-tighter italic">INVILA<span class="text-emerald-500">™</span></div>
-            <div class="flex gap-8 font-semibold text-slate-600">
-                <a href="#simulasi" class="text-emerald-600 font-bold">Simulasi Saving</a>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Hero Section -->
-    <header class="hero-gradient text-white pt-20 pb-24 px-6">
-        <div class="max-w-5xl mx-auto text-center">
-            <span class="bg-emerald-500/20 text-emerald-400 px-4 py-2 rounded-full text-xs font-bold tracking-widest uppercase mb-6 inline-block">Profit Generator</span>
-            <h1 class="text-4xl md:text-6xl font-extrabold mb-8 leading-tight">Ubah Limbah Menjadi Aset Air — Tanpa CAPEX</h1>
-            <p class="text-lg md:text-xl text-slate-400 mb-10 max-w-3xl mx-auto">Transformasikan air limbah menjadi aset bernilai. Dorong efisiensi biaya operasional yang lebih cerdas dan berkelanjutan melalui sistem reklamasi air.</p>
-            <div class="flex flex-col md:flex-row justify-center gap-4">
-                <a href="#simulasi" class="bg-emerald-500 hover:bg-emerald-600 text-white px-8 py-4 rounded-xl font-bold transition shadow-xl shadow-emerald-500/20 text-lg">Mulai Simulasi Sekarang</a>
-            </div>
-        </div>
-    </header>
-
-    <!-- Calculator Section -->
-    <section id="simulasi" class="py-16 px-6 -mt-16">
-        <div class="max-w-5xl mx-auto">
-            <div class="bg-white rounded-[2.5rem] shadow-2xl p-8 md:p-12 border border-slate-200">
-                <div class="text-center mb-10">
-                    <h2 class="text-3xl font-bold mb-2 text-slate-800">Hitung Potensi Profit Anda</h2>
-                    <p class="text-slate-500 italic text-sm">Masukkan harga beli air existing dan volume kebutuhan Anda.</p>
-                </div>
-                
-                <div class="grid md:grid-cols-2 gap-8 mb-10">
-                    <!-- Left Side: Inputs -->
-                    <div class="space-y-6">
-                        <div>
-                            <label class="block text-sm font-bold text-slate-700 mb-2">Volume Air Existing (m³/hari)</label>
-                            <input type="number" id="vol_total" value="2000" class="w-full bg-slate-50 border border-slate-200 p-4 rounded-xl outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 transition font-semibold text-lg">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-bold text-slate-700 mb-2">Harga PDAM (Rp/m³)</label>
-                            <div class="relative">
-                                <span class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-bold">Rp</span>
-                                <input type="number" id="pdam_price" value="14600" class="w-full bg-slate-50 border border-slate-200 p-4 pl-12 rounded-xl outline-none focus:border-emerald-500 transition font-semibold text-lg">
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Right Side: Invila & Target -->
-                    <div class="space-y-6">
-                        <div>
-                            <label class="block text-sm font-bold text-slate-700 mb-2">Harga Jasa Invila™ (Rp/m³)</label>
-                            <div class="relative">
-                                <span class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-bold">Rp</span>
-                                <input type="number" id="invila_price" value="5500" class="w-full bg-slate-50 border border-slate-200 p-4 pl-12 rounded-xl outline-none focus:border-emerald-500 transition font-semibold text-lg">
-                            </div>
-                        </div>
-                        <div class="p-6 bg-emerald-50 rounded-xl border border-emerald-100 flex items-center justify-center text-center">
-                            <div>
-                                <span class="block text-emerald-800 font-extrabold text-sm tracking-widest uppercase">Yield Reklamasi Target</span>
-                                <span class="text-3xl font-black text-emerald-600">80%</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Result Display -->
-                <div class="bg-emerald-600 rounded-3xl p-10 text-white text-center shadow-2xl shadow-emerald-500/40 relative overflow-hidden group">
-                    <div class="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                    <p class="uppercase tracking-widest text-[10px] font-bold opacity-80 mb-4">ESTIMASI PENGHEMATAN PER BULAN</p>
-                    <div id="monthly_saving" class="text-4xl md:text-7xl font-black mb-6 tracking-tight drop-shadow-md">Rp 0</div>
-                    <div id="annual_saving" class="text-lg md:text-xl font-bold bg-white/10 py-3 px-10 rounded-full inline-block backdrop-blur-md border border-white/20">
-                        Rp 0 / Tahun
-                    </div>
-                </div>
-
-                <div class="mt-8 text-center">
-                    <p class="text-slate-400 text-[10px] uppercase tracking-widest font-bold">Hasil simulasi bersifat estimasi berdasarkan input data Anda.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="py-12 bg-white border-t border-slate-200 px-6">
-        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
-            <div class="text-slate-400 text-xs font-bold uppercase tracking-widest">&copy; 2026 PT Adikarya Konstruksi Perkasa | Invila™ Team</div>
-            <div class="flex gap-6 text-slate-400 font-bold text-xs uppercase tracking-widest">
-                <span>Sustainability First</span>
-                <span class="text-slate-200">|</span>
-                <span>Water Efficiency</span>
-            </div>
-        </div>
-    </footer>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
     <script>
-        /** * FINAL VALIDATED CODE: Invila™ Profit Generator v2.6
-         * Logika: Murni PDAM vs Jasa Invila dengan Yield Target 80%
-         */
-        function updateSavings() {
-            const elVol = document.getElementById('vol_total');
-            const elPdam = document.getElementById('pdam_price');
-            const elInvila = document.getElementById('invila_price');
-
-            if (!elVol || !elPdam || !elInvila) return;
-
-            const volTotal = parseFloat(elVol.value) || 0;
-            const pdamPrice = parseFloat(elPdam.value) || 0;
-            const invilaPrice = parseFloat(elInvila.value) || 0;
-
-            const yieldRate = 0.8;
-            const volReclaimed = volTotal * yieldRate;
-            
-            let savingPerCubic = pdamPrice - invilaPrice;
-            
-            if (savingPerCubic < 0) savingPerCubic = 0; 
-
-            const dailySaving = volReclaimed * savingPerCubic;
-            const monthlySaving = dailySaving * 31; 
-            const annualSaving = monthlySaving * 12;
-
-            const formatter = new Intl.NumberFormat('id-ID', {
-                style: 'currency',
-                currency: 'IDR',
-                minimumFractionDigits: 0,
-                maximumFractionDigits: 0
-            });
-
-            const mSavingEl = document.getElementById('monthly_saving');
-            const aSavingEl = document.getElementById('annual_saving');
-
-            if (mSavingEl) {
-                mSavingEl.innerText = formatter.format(monthlySaving).replace("Rp", "Rp ");
-                mSavingEl.style.opacity = monthlySaving === 0 ? "0.5" : "1";
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        ink: '#0f172a',
+                        royalBlue: '#1e40af',
+                        surface: '#f8fafc',
+                        roseAccent: '#e11d48',
+                    }
+                }
             }
+        }
+    </script>
+
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f1f5f9; }
+        .blurred { filter: blur(5px); user-select: none; }
+        .pdf-page { width: 210mm; min-height: 297mm; padding: 20mm; background: white; color: #0f172a; position: relative; }
+        .pdf-stage { position: absolute; left: -9999px; top: 0; }
+        input::-webkit-outer-spin-button, input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+    </style>
+</head>
+<body class="py-12 px-4">
+
+    <div class="max-w-6xl mx-auto">
+        <div class="bg-white p-8 rounded-[2.5rem] shadow-2xl border border-slate-200">
+            <div class="mb-10">
+                <h2 class="text-royalBlue font-black tracking-widest uppercase text-xs mb-2">Intelligence Saving Audit</h2>
+                <h3 class="text-3xl font-black text-ink tracking-tight">Visualisasi Potensi Saving & Nilai Infrastruktur</h3>
+            </div>
+
+            <div class="grid lg:grid-cols-3 gap-10">
+                <div class="bg-slate-50 p-6 rounded-3xl border border-slate-200 space-y-5">
+                    <p class="text-[10px] font-bold uppercase tracking-widest text-slate-400 border-b pb-2">Operational Variables</p>
+                    
+                    <div>
+                        <label class="block text-[10px] font-black mb-2 text-slate-500 uppercase">Water Consumption (m³/hari)</label>
+                        <input type="number" id="in-A" value="1000" oninput="calculate()" class="w-full p-4 rounded-2xl border-0 ring-1 ring-slate-200 focus:ring-2 focus:ring-royalBlue font-bold text-lg outline-none">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-[10px] font-black mb-2 text-slate-500 uppercase">Tarif Air Bersih Existing (Rp/m³)</label>
+                        <input type="number" id="in-B" value="14600" oninput="calculate()" class="w-full p-4 rounded-2xl border-0 ring-1 ring-slate-200 focus:ring-2 focus:ring-royalBlue font-bold text-lg outline-none">
+                    </div>
+
+                    <div>
+                        <label class="block text-[10px] font-black mb-2 text-slate-500 uppercase">Tarif Pengolahan Air Limbah (Rp/m³)</label>
+                        <input type="number" id="in-C" value="14041" oninput="calculate()" class="w-full p-4 rounded-2xl border-0 ring-1 ring-slate-200 focus:ring-2 focus:ring-royalBlue font-bold text-lg outline-none">
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-[10px] font-black mb-2 text-slate-500 uppercase">% Limbah (Kawasan)</label>
+                            <input type="number" id="in-E" value="80" oninput="calculate()" class="w-full p-4 rounded-2xl border-0 ring-1 ring-slate-200 focus:ring-2 font-bold outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-[10px] font-black mb-2 text-slate-500 uppercase">Tarif Invila™ (Rp/m³)</label>
+                            <input type="number" id="in-F" value="6000" oninput="calculate()" class="w-full p-4 rounded-2xl border-0 ring-1 ring-slate-200 focus:ring-2 focus:ring-green-500 font-bold text-green-600 outline-none">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-2 space-y-6">
+                    <div class="bg-ink p-8 rounded-[2rem] text-white flex justify-between items-center relative overflow-hidden">
+                        <div class="relative z-10">
+                            <p class="text-slate-400 text-[10px] font-black uppercase tracking-widest mb-2">Monthly Potential Saving (24 Days)</p>
+                            <h4 id="out-monthly" class="text-5xl font-black text-green-400">Rp 0</h4>
+                        </div>
+                        <div class="opacity-10 absolute -right-4 text-8xl font-black italic select-none">SAVING</div>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div class="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm">
+                            <p class="text-slate-400 text-[10px] font-black uppercase mb-1">Total Tagihan Hari Ini (Legacy)</p>
+                            <p id="out-legacy" class="text-xl font-bold text-roseAccent">Rp 0</p>
+                        </div>
+                        <div class="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm">
+                            <p class="text-slate-400 text-[10px] font-black uppercase mb-1">Total Tagihan Setelah Invila™</p>
+                            <p id="out-invila" class="text-xl font-bold text-green-600">Rp 0</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-blue-50 p-6 rounded-3xl border border-blue-100 flex justify-between items-center">
+                        <div>
+                            <p class="text-royalBlue text-[10px] font-black uppercase mb-1">Annual Saving Projection</p>
+                            <p id="out-annual" class="text-3xl font-black text-royalBlue">Rp 0</p>
+                        </div>
+                        <div class="text-right">
+                            <p class="text-slate-400 text-[10px] font-black uppercase mb-1">Efficiency Rate</p>
+                            <p id="out-percent" class="text-2xl font-black text-slate-700">0%</p>
+                        </div>
+                    </div>
+
+                    <button onclick="generatePDF()" id="btn-pdf" class="w-full bg-royalBlue text-white p-5 rounded-2xl font-black uppercase tracking-[0.2em] text-sm hover:bg-blue-800 transition-all shadow-xl">
+                        Download Strategic Report (PDF)
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="pdf-stage">
+        <div id="pdf-p1" class="pdf-page">
+            <div class="flex justify-between border-b-2 border-slate-200 pb-6 mb-10">
+                <div>
+                    <h1 class="text-2xl font-black italic tracking-tighter"><span class="blurred">INVILA™</span> SNAPSHOT</h1>
+                    <p class="text-[10px] font-bold text-slate-400 tracking-widest uppercase">Confidential Industrial Report</p>
+                </div>
+                <div class="text-right text-[10px] font-black text-slate-500 uppercase tracking-widest">
+                    Ringkasan Saving Audit<br>Ref: STR-2026-INTEL
+                </div>
+            </div>
+
+            <h2 class="text-xs font-black text-royalBlue uppercase tracking-widest mb-4">Financial Upside Analysis</h2>
+            <h3 class="text-3xl font-black text-ink leading-tight mb-8">RINGKASAN NILAI INVESTASI & POTENSI PENGHEMATAN <span class="blurred">INVILA™</span> INTELLIGENCE</h3>
             
-            if (aSavingEl) {
-                aSavingEl.innerText = formatter.format(annualSaving).replace("Rp", "Rp ") + " / Tahun";
+            <p class="text-sm text-slate-600 leading-relaxed mb-10">Transformasi utilitas air dari model konvensional menjadi <b>Water as a Service (WaaS)</b> mengeliminasi risiko operasional serta memitigasi beban biaya modal (CapEx) menjadi kinerja yang lebih terukur. Laporan ini mensinkronisasikan data konsumsi aktual dengan potensi efisiensi sistem modular.</p>
+
+            <div class="bg-slate-50 p-8 rounded-3xl border border-slate-200 mb-10">
+                <p class="text-[10px] font-black uppercase text-slate-400 mb-6 tracking-widest text-center">Basis Data Simulasi & Ketetapan Kawasan</p>
+                <div class="grid grid-cols-2 gap-y-6 text-sm">
+                    <div class="border-l-2 border-slate-200 pl-4"><p class="text-slate-500 text-[10px] font-bold uppercase">Water Consumption</p><p id="pdf-A" class="font-black text-lg">0</p></div>
+                    <div class="border-l-2 border-slate-200 pl-4"><p class="text-slate-500 text-[10px] font-bold uppercase">Tarif Air Bersih</p><p id="pdf-B" class="font-black text-lg">0</p></div>
+                    <div class="border-l-2 border-slate-200 pl-4"><p class="text-slate-500 text-[10px] font-bold uppercase">Tarif Air Limbah (TPAL)</p><p id="pdf-C" class="font-black text-lg">0</p></div>
+                    <div class="border-l-2 border-slate-200 pl-4"><p class="text-slate-500 text-[10px] font-bold uppercase">Tarif Air Bersih Invila™</p><p id="pdf-F" class="font-black text-lg text-royalBlue">0</p></div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-6">
+                <div class="bg-slate-900 text-white p-8 rounded-[2.5rem]">
+                    <p class="text-slate-400 text-[10px] font-bold uppercase mb-2">Potensi Hemat Bulanan</p>
+                    <p id="pdf-monthly" class="text-3xl font-black text-green-400">Rp 0</p>
+                </div>
+                <div class="bg-slate-100 p-8 rounded-[2.5rem]">
+                    <p class="text-slate-500 text-[10px] font-bold uppercase mb-2">Hemat Tahunan</p>
+                    <p id="pdf-annual" class="text-3xl font-black text-ink">Rp 0</p>
+                </div>
+            </div>
+
+            <div class="absolute bottom-16 left-16 right-16 border-t pt-6">
+                <p class="text-[9px] text-slate-400 italic leading-relaxed text-center">
+                    Angka penghematan di atas adalah hasil sinkronisasi data presisi sebuah solusi finansial yang realistis untuk keberlanjutan industri yang dapat diwujudkan antara entitas Anda dan <span class="blurred">Invila™</span>.
+                </p>
+            </div>
+        </div>
+
+        <div id="pdf-p2" class="pdf-page">
+            <div class="text-royalBlue text-[10px] font-black uppercase tracking-widest mb-2">Audit Valuasi Infrastruktur</div>
+            <h3 class="text-3xl font-black text-ink border-b-4 border-ink pb-4 mb-10">ANALISIS NILAI ASET: SETUP LAMA VS ZERO CAPEX <span class="blurred">INVILA™</span></h3>
+            
+            <div class="relative h-[250px] border-l-2 border-b-2 border-slate-200 mb-10 mx-4">
+                <svg width="100%" height="100%" viewBox="0 0 800 250" preserveAspectRatio="none" class="overflow-visible">
+                    <polyline id="chart-legacy" fill="none" stroke="#e11d48" stroke-width="5" stroke-linejoin="round" />
+                    <polyline id="chart-invila" fill="none" stroke="#1e40af" stroke-width="5" stroke-linejoin="round" />
+                </svg>
+                <div class="flex justify-between text-[10px] font-black text-slate-400 mt-4 uppercase tracking-tighter">
+                    <span>Tahun 1</span><span>Tahun 2</span><span>Tahun 3</span><span>Tahun 4</span><span>Tahun 5</span>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-6 mb-8">
+                <div class="bg-slate-100 p-8 rounded-3xl">
+                    <p class="text-slate-500 text-[10px] font-bold uppercase mb-2">CapEx Benchmark</p>
+                    <p class="text-xl font-black italic">≈ IDR 4.05 Million per m³/day</p>
+                </div>
+                <div class="bg-blue-50 p-8 rounded-3xl border border-blue-100">
+                    <p class="text-royalBlue text-[10px] font-bold uppercase mb-2">Infrastruktur ditanggung <span class="blurred">Invila™</span></p>
+                    <p id="pdf-capex" class="text-xl font-black text-royalBlue">Rp 0</p>
+                </div>
+            </div>
+
+            <div class="bg-rose-50 p-10 rounded-[3rem] border border-rose-100 mb-8 flex justify-between items-center">
+                <div class="max-w-[60%]">
+                    <p class="text-roseAccent text-[10px] font-black uppercase mb-2 tracking-widest">5-Year Savings Projection</p>
+                    <p class="text-slate-600 text-[11px] leading-relaxed">Projected cumulative financial savings over a five-year operating period, supported by a zero upfront CapEx model and the transfer of asset maintenance responsibility.</p>
+                </div>
+                <div class="text-right">
+                    <p id="pdf-5year" class="text-4xl font-black text-roseAccent">0</p>
+                    <p class="text-[9px] font-bold text-roseAccent mt-1 uppercase">Miliar Net Savings</p>
+                </div>
+            </div>
+
+            <div class="bg-slate-900 text-slate-400 p-6 rounded-2xl text-[10px] leading-relaxed">
+                <strong class="text-white uppercase block mb-1">Catatan Strategis:</strong>
+                Data penghematan di atas menunjukkan bahwa transformasi utilitas air tidak hanya mengurangi beban operasional (OPEX), tetapi juga memindahkan seluruh risiko degradasi aset kepada <span class="blurred">Invila™</span>.
+            </div>
+
+            <div class="absolute bottom-12 w-full left-0 text-center text-[9px] font-black text-slate-300 uppercase tracking-[0.4em]">
+                <span class="blurred">Invila™</span> Intelligence System
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function formatCurr(val) {
+            if (val >= 1e9) return 'Rp ' + (val / 1e9).toFixed(2) + ' Miliar';
+            if (val >= 1e6) return 'Rp ' + (val / 1e6).toFixed(1) + ' Juta';
+            return 'Rp ' + Math.round(val).toLocaleString('id-ID');
+        }
+
+        function calculate() {
+            // Inputs
+            const A = parseFloat(document.getElementById('in-A').value) || 0;
+            const B = parseFloat(document.getElementById('in-B').value) || 0;
+            const C = parseFloat(document.getElementById('in-C').value) || 0;
+            const E = (parseFloat(document.getElementById('in-E').value) || 0) / 100;
+            const F = parseFloat(document.getElementById('in-F').value) || 0;
+
+            // Legacy Logic
+            const legacyDaily = (A * B) + ((A * E) * C);
+            
+            // Invila Logic (90% Self-Prod, 10% Waste)
+            const invilaDaily = (A * 0.9 * F) + (A * 0.1 * C);
+            
+            const dailySaving = legacyDaily - invilaDaily;
+            const monthlySaving = dailySaving * 24;
+            const annualSaving = dailySaving * 365;
+            const fiveYearSaving = annualSaving * 5;
+            const percentSaving = legacyDaily > 0 ? (dailySaving / legacyDaily * 100) : 0;
+            const capexValue = (A / 86.4) * 360000000;
+
+            // Update Dashboard
+            document.getElementById('out-monthly').innerText = formatCurr(monthlySaving);
+            document.getElementById('out-legacy').innerText = formatCurr(legacyDaily);
+            document.getElementById('out-invila').innerText = formatCurr(invilaDaily);
+            document.getElementById('out-annual').innerText = formatCurr(annualSaving);
+            document.getElementById('out-percent').innerText = percentSaving.toFixed(1) + '%';
+            document.getElementById('out-5year').innerText = formatCurr(fiveYearSaving);
+
+            // Update PDF Template Data
+            document.getElementById('pdf-A').innerText = A.toLocaleString('id-ID') + ' m³/day';
+            document.getElementById('pdf-B').innerText = 'Rp ' + B.toLocaleString('id-ID');
+            document.getElementById('pdf-C').innerText = 'Rp ' + C.toLocaleString('id-ID');
+            document.getElementById('pdf-F').innerText = 'Rp ' + F.toLocaleString('id-ID');
+            document.getElementById('pdf-monthly').innerText = formatCurr(monthlySaving);
+            document.getElementById('pdf-annual').innerText = formatCurr(annualSaving);
+            document.getElementById('pdf-capex').innerText = formatCurr(capexValue);
+            document.getElementById('pdf-5year').innerText = (fiveYearSaving / 1e9).toFixed(2);
+
+            // Chart Visual Logic
+            const maxVal = legacyDaily * 365 * 5;
+            let legPts = ""; let invPts = "";
+            for(let i=0; i<=5; i++) {
+                const x = (i/5) * 800;
+                const ly = 250 - (((legacyDaily * 365 * i) / maxVal) * 250);
+                const iy = 250 - (((invilaDaily * 365 * i) / maxVal) * 250);
+                legPts += `${x},${ly} `; invPts += `${x},${iy} `;
+            }
+            document.getElementById('chart-legacy').setAttribute('points', legPts.trim());
+            document.getElementById('chart-invila').setAttribute('points', invPts.trim());
+        }
+
+        async function generatePDF() {
+            const btn = document.getElementById('btn-pdf');
+            const originalText = btn.innerText;
+            btn.innerText = "Generating Strategic Report...";
+            btn.disabled = true;
+
+            try {
+                const { jsPDF } = window.jspdf;
+                const doc = new jsPDF('p', 'mm', 'a4');
+                
+                const canvas1 = await html2canvas(document.getElementById('pdf-p1'), { scale: 2 });
+                doc.addImage(canvas1.toDataURL('image/png'), 'PNG', 0, 0, 210, 297);
+                
+                doc.addPage();
+                const canvas2 = await html2canvas(document.getElementById('pdf-p2'), { scale: 2 });
+                doc.addImage(canvas2.toDataURL('image/png'), 'PNG', 0, 0, 210, 297);
+                
+                doc.save(`Invila-Strategic-Audit-${Date.now()}.pdf`);
+            } catch (err) {
+                console.error("PDF Error:", err);
+                alert("Gagal membuat PDF. Periksa konsol browser.");
+            } finally {
+                btn.innerText = originalText;
+                btn.disabled = false;
             }
         }
 
-        document.addEventListener('DOMContentLoaded', () => {
-            ['vol_total', 'pdam_price', 'invila_price'].forEach(id => {
-                const el = document.getElementById(id);
-                if (el) el.addEventListener('input', updateSavings);
-            });
-            updateSavings();
-        });
+        // Initial Run
+        calculate();
     </script>
 </body>
 </html>
