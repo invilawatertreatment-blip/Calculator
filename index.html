@@ -62,7 +62,7 @@
     <div class="max-w-[1300px] mx-auto w-full relative z-10 flex flex-col items-center">
         
         <div class="text-center mb-10 w-full">
-            <img src="logo-invila-white.png" class="h-14 mx-auto mb-6" alt="INVILA" onerror="this.src='logo-invila-white.png'">
+            <img src="logo-invila-white.png" class="h-14 mx-auto mb-6" alt="INVILA">
             <div class="inline-flex items-center gap-3 bg-luxuryPanel border border-white/10 px-5 py-2 rounded-full mb-5 shadow-sm">
                 <span class="w-2 h-2 bg-brandGold rounded-full animate-pulse shadow-[0_0_8px_#C5A059]"></span>
                 <span class="text-brandGold font-bold tracking-[0.25em] uppercase text-[10px] md:text-xs">WATER AS A SERVICE by ZERO CapEX</span>
@@ -276,7 +276,7 @@
             <div>
                 <div class="border-b-4 border-mckNavy pb-5 mb-8 flex justify-between items-end">
                     <div class="flex items-center gap-4">
-                        <img src="logo-invila-navy.png" class="h-10 object-contain" alt="Invila Logo" onerror="this.src='logo-invila-white.png'; this.style.filter='invert(100%)';">
+                        <img src="logo-invila-white.png" class="h-10 object-contain" alt="Invila Logo" style="filter: brightness(0);" crossorigin="anonymous">
                         <div class="border-l-2 border-slate-300 pl-4">
                             <h1 class="text-[22px] font-bold text-mckNavy uppercase tracking-tighter font-serif leading-none mb-1">THE STRATEGIC FINANCIAL MEMO</h1>
                             <p class="text-[9px] font-black text-[#C5A059] uppercase tracking-widest leading-none">WATER AS A SERVICE by ZERO CapEX</p>
@@ -428,160 +428,4 @@
             const rand = Math.floor(100 + Math.random() * 900);
             globalRef = `INV-MEMO/${dateCode}-${timeCode}-${rand}`;
             
-            setTxt('pdf-ref', `REF: ${globalRef}`);
-            const options = { year: 'numeric', month: 'long', day: 'numeric' };
-            setTxt('pdf-date', `DATE: ${d.toLocaleDateString('en-GB', options).toUpperCase()}`);
-            
-            return globalRef;
-        }
-
-        function runEngine() {
-            const vol = parseFloat(document.getElementById('inp-flow').value) || 0;
-            const pdam = parseFloat(document.getElementById('inp-pdam').value) || 0;
-            const waste = parseFloat(document.getElementById('inp-waste').value) || 0;
-            const days = parseFloat(document.getElementById('inp-days').value) || 30; // Hidden, default to 30
-
-            const lps = (vol * 1000) / 86400;
-            const capexCovered = lps * CAPEX_PER_LPS;
-
-            const exWaterCostMonthly = (vol * pdam) * days;
-            const exWasteCostMonthly = (vol * WASTEWATER_SURCHARGE * waste) * days;
-            const exTotalMonthly = exWaterCostMonthly + exWasteCostMonthly;
-
-            const inRecycleMonthly = (vol * WAAS_RECYCLE_RATE * WAAS_TARIFF) * days;
-            const inMakeupMonthly = (vol * (1 - WAAS_RECYCLE_RATE) * pdam) * days;
-            const inWaterTotalMonthly = inRecycleMonthly + inMakeupMonthly;
-            
-            const inWasteCostMonthly = (vol * (1 - WAAS_RECYCLE_RATE) * WASTEWATER_SURCHARGE * waste) * days;
-            const inTotalMonthly = inWaterTotalMonthly + inWasteCostMonthly;
-
-            const saveMonthly = exTotalMonthly - inTotalMonthly;
-            const saveYearly = saveMonthly * 12;
-            const save5Year = saveYearly * 5; 
-
-            let reductionPct = 0;
-            if(exTotalMonthly > 0) {
-                reductionPct = ((saveMonthly / exTotalMonthly) * 100).toFixed(1);
-            }
-
-            // NARRATIVE LOGIC
-            if (waste === 0) {
-                setTxt('ui-desc-ex-waste', "Pabrik Non-Kawasan");
-                setTxt('ui-desc-in-waste', "Bebas Surcharge Kawasan");
-                
-                setTxt('pdf-narrative-leakage', `Berdasarkan data utilitas (Kapasitas: <strong class="font-mono text-mckNavy">${numFormat(vol)} m³/hari</strong>), fasilitas saat ini beroperasi di luar ekosistem kawasan terpadu. Ketiadaan utilitas air alternatif mengunci pabrik pada ketergantungan absolut suplai air komersial dengan tarif <strong class="text-legacyRed font-mono">Rp ${numFormat(pdam)}/m³</strong>. In-efisiensi Harga Pokok Produksi (HPP) ini menghasilkan <i class="text-mckNavy font-medium">Baseline Utility OPEX</i> sebesar <strong class="text-legacyRed font-mono">${fmtRp(exTotalMonthly)}</strong> per bulan, sekaligus mengekspos pabrik pada Risiko Gangguan Pasokan (Downtime).`);
-                setTxt('pdf-narrative-solution', `Model <strong class="text-mckNavy">Water-as-a-Service (WaaS)</strong> mengeksekusi strategi Arbitrase Tarif (Tariff Arbitrage) dengan membangun infrastruktur mandiri untuk mensubstitusi pasokan primer menggunakan tarif Invila yang dikunci stabil (<strong class="text-successGreen font-mono">Rp ${numFormat(WAAS_TARIFF)}/m³</strong>). Intervensi ini memangkas biaya utilitas secara radikal hingga <strong class="text-successGreen">${reductionPct}%</strong>, sekaligus mengamankan Kedaulatan Pasokan Air (Water Sovereignty) bagi operasional fasilitas Anda.`);
-                
-                setTxt('pdf-tbl-title-waste', 'Surcharge Air Limbah (Rp 0)');
-                setTxt('pdf-desc-tbl-ex-waste', "Pabrik Non-Kawasan");
-                setTxt('pdf-desc-tbl-in-waste', "Bebas Surcharge Kawasan");
-            } else {
-                setTxt('ui-desc-ex-waste', "Dihitung dr 100% Vol Air");
-                setTxt('ui-desc-in-waste', "Dihitung HANYA dr sisa 20% Air Eksisting");
-                
-                setTxt('pdf-narrative-leakage', `Berdasarkan parameter utilitas saat ini (Kapasitas: <strong class="font-mono text-mckNavy">${numFormat(vol)} m³/hari</strong>), fasilitas menghadapi in-efisiensi struktural ganda: Beban Tarif Air komersial ditambah <strong class="text-legacyRed">Fixed Wastewater Surcharge (85%)</strong>. Beban ganda ini memicu <i class="text-mckNavy font-medium">Baseline Utility OPEX</i> mencapai <strong class="text-legacyRed font-mono">${fmtRp(exTotalMonthly)}</strong> per bulan, sebuah sunk cost yang terus menggerus batas margin EBITDA perusahaan secara permanen.`);
-                setTxt('pdf-narrative-solution', `Model <strong class="text-mckNavy">Water-as-a-Service (WaaS)</strong> mengeksekusi Substitution Rate 80% menggunakan air proses industrial Invila (<strong class="text-successGreen font-mono">Rp ${numFormat(WAAS_TARIFF)}/m³</strong>). Intervensi struktural ini memicu Waterfall Savings: memangkas drastis biaya air primer, yang secara otomatis meruntuhkan basis perhitungan tagihan Surcharge Limbah kawasan (hanya menanggung retribusi dari sisa 20% suplai eksternal).`);
-                
-                setTxt('pdf-tbl-title-waste', 'Wastewater Surcharge (85%)');
-                setTxt('pdf-desc-tbl-ex-waste', "Dihitung dr 100% Vol Air Eksisting");
-                setTxt('pdf-desc-tbl-in-waste', "Anjlok! (Hanya dari sisa 20% Pasokan)");
-            }
-
-            // WEB UI UPDATE
-            setTxt('out-capex', fmtMakro(capexCovered));
-            
-            const out5Year = document.getElementById('out-5year');
-            if(out5Year) {
-                if (save5Year <= 0) {
-                    out5Year.innerText = "Rp 0";
-                    out5Year.classList.replace("text-successGreen", "text-legacyRed");
-                } else {
-                    out5Year.innerText = fmtMakro(save5Year); 
-                    out5Year.classList.replace("text-legacyRed", "text-successGreen");
-                }
-            }
-            
-            setTxt('out-monthly', fmtRp(saveMonthly));
-            setTxt('out-annual', fmtMakro(saveYearly));
-
-            setTxt('ui-ex-water', fmtRp(exWaterCostMonthly));
-            setTxt('ui-ex-waste', fmtRp(exWasteCostMonthly));
-            setTxt('ui-ex-total', fmtRp(exTotalMonthly));
-
-            setTxt('ui-in-recycle', fmtRp(inRecycleMonthly));
-            setTxt('ui-in-makeup', "+ " + fmtRp(inMakeupMonthly) + " (Sisa Cadangan)");
-            setTxt('ui-in-waste', fmtRp(inWasteCostMonthly));
-            setTxt('ui-in-total', fmtRp(inTotalMonthly));
-
-            // PDF STAGE UPDATE
-            if(document.getElementById('pdf-sum-annual')){
-                setTxt('pdf-sum-annual', fmtMakro(saveYearly));
-                setTxt('pdf-sum-monthly', fmtRp(saveMonthly));
-                setTxt('pdf-sum-capex', fmtMakro(capexCovered));
-                
-                setTxt('pdf-tbl-ex-water', fmtRp(exWaterCostMonthly));
-                setTxt('pdf-tbl-ex-waste', fmtRp(exWasteCostMonthly));
-                setTxt('pdf-tbl-ex-total', fmtRp(exTotalMonthly));
-                
-                setTxt('pdf-tbl-in-water', fmtRp(inWaterTotalMonthly));
-                setTxt('pdf-tbl-in-waste', fmtRp(inWasteCostMonthly));
-                setTxt('pdf-tbl-in-total', fmtRp(inTotalMonthly));
-                
-                setTxt('pdf-iv-capex', fmtMakro(capexCovered));
-                setTxt('pdf-iv-pct', `${reductionPct}%`);
-            }
-        }
-
-        function triggerSalesRadar() {
-            try {
-                fetch(WEBHOOK_URL, {
-                    method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ 
-                        event: 'CFO_MEMO_DOWNLOAD', 
-                        ref: globalRef, 
-                        flow: document.getElementById('inp-flow').value, 
-                        pdam: document.getElementById('inp-pdam').value, 
-                        invila: "Rp 6000", 
-                        ebitda: document.getElementById('out-5year').innerText, 
-                        timestamp: new Date().toLocaleString('id-ID') 
-                    })
-                });
-            } catch(e) {}
-        }
-
-        async function executeStrategicDownload() {
-            const btn = document.getElementById('btn-pdf');
-            const alertMsg = document.getElementById('status-msg');
-            const originalHTML = btn.innerHTML;
-            
-            btn.classList.add("opacity-50", "pointer-events-none");
-            btn.innerHTML = `<span class="text-sm font-mono animate-pulse text-[#001b44] font-bold flex justify-center items-center h-full py-4">MENYUSUN MEMO FINANSIAL...</span>`;
-            if(alertMsg) alertMsg.classList.remove("hidden");
-
-            const ref = generateDocRef(); 
-            runEngine(); 
-            triggerSalesRadar();
-
-            setTimeout(async () => {
-                try {
-                    const { jsPDF } = window.jspdf;
-                    const doc = new jsPDF('p', 'mm', 'a4');
-                    const canvas = await html2canvas(document.getElementById('pdf-report'), { scale: 3, useCORS: true, logging: false });
-                    doc.addImage(canvas.toDataURL('image/jpeg', 1.0), 'JPEG', 0, 0, 210, 297);
-                    
-                    doc.save(`Invila_Strategic_Financial_Memo_${ref.replace(/\//g, '-')}.pdf`);
-                } catch (error) {
-                    console.error("PDF Render Error:", error);
-                    alert("Gagal merender dokumen. Pastikan koneksi dan browser Anda stabil.");
-                } finally {
-                    btn.innerHTML = originalHTML;
-                    btn.classList.remove("opacity-50", "pointer-events-none");
-                    if(alertMsg) alertMsg.classList.add("hidden");
-                }
-            }, 800); 
-        }
-
-        window.addEventListener('DOMContentLoaded', runEngine);
-    </script>
-</body>
-</html>
+            setTxt('pdf-ref', `REF: ${
